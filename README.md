@@ -11,7 +11,6 @@
 - Sedef Arıcan: Team Member / Developer
 
 ---
-## Ürün Bilgileri
 
 ## Ürün İsmi
 **ŞifaAI**
