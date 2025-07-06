@@ -37,3 +37,16 @@ Sanal Sağlık Asistanı, tahlil sonuçlarını sade bir dille yorumlayan, karma
 - 40 yaş ve üzeri bireyler  
 - Kronik hastalık sahibi kullanıcılar  
 - Dijital sağlık rehberine ihtiyaç duyanlar  
+
+---
+
+## Flowchart 
+
+- [Flowchart](https://miro.com/app/board/uXjVIhYBPCE=/?share_link_id=282860768120)
+
+---
+
+## Sprints
+
+<img width="1069" alt="sprints" src="https://github.com/user-attachments/assets/e5f52508-ab61-4d2f-8752-a88bc5cde378" />
+
