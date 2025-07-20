@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Hatırlatıcı Kur{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center" style="color: #0ABAB5;">⏰ Hatırlatıcı Kur</h2>
+<p class="mb-4 text-center text-muted">Belirli günlerde tekrarlayan sağlık hatırlatıcıları oluştur.</p>
+
+<form method="POST" class="p-4 rounded" style="background-color: #F2FFFC;">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label for="title" class="form-label text-dark">Başlık</label>
+    <input type="text" name="title" id="title" class="form-control border-0 shadow-sm" style="background-color: #E6F7F4;" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label text-dark">Açıklama</label>
+    <textarea name="description" id="description" rows="3" class="form-control border-0 shadow-sm" style="background-color: #E6F7F4;"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="frequency" class="form-label text-dark">Hatırlatma Sıklığı</label>
+    <select name="frequency" id="frequency" class="form-select border-0 shadow-sm" style="background-color: #E6F7F4;" required>
+      <option value="daily">Her Gün</option>
+      <option value="monday">Her Pazartesi</option>
+      <option value="tuesday">Her Salı</option>
+      <option value="wednesday">Her Çarşamba</option>
+      <option value="thursday">Her Perşembe</option>
+      <option value="friday">Her Cuma</option>
+      <option value="saturday">Her Cumartesi</option>
+      <option value="sunday">Her Pazar</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="time" class="form-label text-dark">Hatırlatma Saati</label>
+    <input type="time" name="time" id="time" class="form-control border-0 shadow-sm" style="background-color: #E6F7F4;" required>
+  </div>
+
+  <button type="submit" class="btn" style="background-color: #0ABAB5; color: white;">Hatırlatıcıyı Kaydet</button>
+</form>
+
+{% if success %}
+  <div class="alert alert-success mt-4 shadow-sm">✅ Hatırlatıcı başarıyla kaydedildi!</div>
+{% endif %}
+
+{% endblock %}

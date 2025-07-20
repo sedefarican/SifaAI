@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Sağlık Sorusu Sor{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center" style="color: #0ABAB5;">❓ Sağlıkla İlgili Bir Soru Sor</h2>
+<p class="mb-4 text-center text-muted">Merak ettiğin herhangi bir sağlık konusunu bizimle paylaş.</p>
+
+<form method="POST" class="p-4 rounded" style="background-color: #F2FFFC;">
+  {% csrf_token %}
+  
+  <div class="mb-3">
+    <label for="soru" class="form-label text-dark">Sorunuz</label>
+    <textarea name="soru" id="soru" rows="6"
+      class="form-control border-0 shadow-sm"
+      style="background-color: #E6F7F4;"
+      placeholder="Örneğin: Son zamanlarda sürekli baş ağrısı yaşıyorum, neden olabilir?" required>
+    </textarea>
+  </div>
+
+  <button type="submit" class="btn" style="background-color: #0ABAB5; color: white;">Soruyu Gönder</button>
+</form>
+
+{% if success %}
+  <div class="alert alert-success mt-4 shadow-sm">✅ Sorunuz alındı, en kısa sürede cevaplanacaktır!</div>
+{% endif %}
+
+{% endblock %}

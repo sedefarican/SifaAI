@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Tahlil Yükleme{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+  <h2 style="color: #0A9A92;">Tahlil Sonucunuzu Yükleyin</h2>
+  <p class="text-muted">PDF formatındaki tahlil dosyanızı yükleyin, açıklama alın.</p>
+</div>
+
+{% if success %}
+  <div class="alert alert-success text-center" role="alert">
+    ✅ PDF başarıyla yüklendi ve açıklama oluşturuldu!
+  </div>
+
+  <div class="card border-0 shadow-sm mb-4" style="background-color: #E6F5F3;">
+    <div class="card-body">
+      <h5 class="card-title" style="color: #0A9A92;">Açıklama:</h5>
+      <pre class="text-dark" style="white-space: pre-wrap;">{{ explanation }}</pre>
+    </div>
+  </div>
+{% endif %}
+
+<div class="card border-0 shadow-sm" style="background-color: #E6F5F3;">
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label text-dark">{{ form.file.label }}</label>
+        {{ form.file }}
+      </div>
+      <button type="submit" class="btn btn-outline-primary">Yükle</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+

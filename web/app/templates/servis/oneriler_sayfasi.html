@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Sağlık Önerileri{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center">📋 Tahlil Bazlı Sağlık Önerileri</h2>
+<p class="mb-5 text-center text-muted">Yüklediğiniz tahlil dosyasına göre sistemin önerdiği başlıca tavsiyeler aşağıdadır.</p>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+
+  <div class="col">
+    <div class="card h-100" style="background-color: #ADEED9; color: #1B2A41;">
+      <div class="card-body">
+        <h5 class="card-title">🥗 Beslenme Tavsiyesi</h5>
+        <p class="card-text">
+          <strong>Kolesterol seviyeniz yüksek.</strong> Kırmızı et ve doymuş yağ içeren besinleri azaltın. Lifli gıdalara ağırlık verin.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100" style="background-color: #D6FBF2; color: #1B2A41;">
+      <div class="card-body">
+        <h5 class="card-title">🏃 Egzersiz Önerisi</h5>
+        <p class="card-text">
+          Orta tempolu egzersizler ile LDL’yi azaltabilir, HDL seviyesini artırabilirsiniz. Günde 30 dk yürüyüş yeterli olur.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100" style="background-color: #FFF4F8; color: #1B2A41;">
+      <div class="card-body">
+        <h5 class="card-title">🧘 Stres ve Uyku</h5>
+        <p class="card-text">
+          <strong>D vitamini eksikliği</strong> tespit edildi. Güneş ışığı ve uyku düzeni önemlidir. Her gün açık havada 30 dakika geçirmeniz önerilir.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100" style="background-color: #C7F5E3; color: #1B2A41;">
+      <div class="card-body">
+        <h5 class="card-title">💊 Takviye Uyarısı</h5>
+        <p class="card-text">
+          Demir seviyeniz düşük. Doktor kontrolünde demir takviyesi almanız ve C vitamini ile desteklemeniz önerilir.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

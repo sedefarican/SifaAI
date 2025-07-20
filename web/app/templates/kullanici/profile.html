@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Profilim{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4 text-center" style="color: #0ABAB5;">👤 Profil Bilgileriniz</h2>
+
+<!-- 🔹 KİŞİSEL VE SAĞLIK BİLGİLERİ -->
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+  <div class="col">
+    <div class="card h-100 shadow-sm" style="background-color: #E6F7F4;">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #0ABAB5;">Kişisel Bilgiler</h5>
+        <ul class="list-unstyled text-dark">
+          <li><strong>Ad:</strong> {{ patient.name }}</li>
+          <li><strong>Kullanıcı Adı:</strong> {{ patient.username }}</li>
+          <li><strong>E-posta:</strong> {{ patient.email }}</li>
+          <li><strong>Doğum Tarihi:</strong> {{ patient.birth_date }}</li>
+          <li><strong>Yaş:</strong> {{ patient.age }}</li>
+          <li><strong>Cinsiyet:</strong> {{ patient.gender }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 shadow-sm" style="background-color: #E6F7F4;">
+      <div class="card-body">
+        <h5 class="card-title" style="color: #0ABAB5;">Sağlık Bilgileri</h5>
+        <ul class="list-unstyled text-dark">
+          <li><strong>Boy:</strong> {{ patient.height }} cm</li>
+          <li><strong>Kilo:</strong> {{ patient.weight }} kg</li>
+          <li><strong>Hastalıklar:</strong> {{ patient.illness|default:"Belirtilmedi" }}</li>
+          <li><strong>İlaçlar:</strong> {{ patient.drugs|default:"Belirtilmedi" }}</li>
+          <li><strong>Ameliyat Geçmişi:</strong> {{ patient.surgical_history|default:"Belirtilmedi" }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 YÜKLENEN TAHLİL DOSYALARI VE AÇIKLAMALAR -->
+<h4 class="mb-3" style="color: #0ABAB5;">📄 Önceki Tahlil Yorumları</h4>
+
+{% if reports %}
+  <div class="list-group shadow-sm mb-5">
+    {% for report in reports %}
+      <div class="list-group-item list-group-item-action" style="background-color: #F2FFFC; color: #333;">
+        <div class="d-flex justify-content-between align-items-center">
+          <strong>{{ report.created_at|date:"d M Y, H:i" }}</strong>
+          <small class="text-muted">{{ report.file.name|slice:"10:" }}</small>
+        </div>
+        <p class="mb-1 mt-2" style="white-space: pre-wrap;">{{ report.explanation|truncatewords:30 }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted">Henüz tahlil yüklenmemiş.</p>
+{% endif %}
+
+{% endblock %}

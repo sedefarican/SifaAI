@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Ana Sayfa{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+  <h2 class="mb-3" style="color: #0A9A92;">Hoş geldin, {{ patient.name }} 👋</h2>
+  <p class="lead">ŞifaAI’ye hoş geldin! Lütfen yapmak istediğin işlemi seç:</p>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm" style="background-color: #E6F5F3;">
+      <div class="card-body text-center">
+        <h5 class="card-title" style="color: #0A9A92;">📄 Tahlil Sonucu Açıklama</h5>
+        <p class="card-text text-dark">Tahlil PDF'ini yükle, sadeleştirilmiş yorum al.</p>
+        <a href="{% url 'tahlil_sayfasi' %}" class="btn btn-outline-primary">Git</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm" style="background-color: #E6F5F3;">
+      <div class="card-body text-center">
+        <h5 class="card-title" style="color: #0A9A92;">🍎 Sağlık Önerileri</h5>
+        <p class="card-text text-dark">Sana özel beslenme ve egzersiz önerileri al.</p>
+        <a href="{% url 'oneriler_sayfasi' %}" class="btn btn-outline-primary">Git</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm" style="background-color: #E6F5F3;">
+      <div class="card-body text-center">
+        <h5 class="card-title" style="color: #0A9A92;">⏰ Hatırlatıcı Kur</h5>
+        <p class="card-text text-dark">Google Takvim'e sağlık hatırlatıcıları ekle.</p>
+        <a href="{% url 'hatirlatici_sayfasi' %}" class="btn btn-outline-primary">Git</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card h-100 border-0 shadow-sm" style="background-color: #E6F5F3;">
+      <div class="card-body text-center">
+        <h5 class="card-title" style="color: #0A9A92;">❓ Soru Sor</h5>
+        <p class="card-text text-dark">Herhangi bir sağlık sorunla ilgili soru sor.</p>
+        <a href="{% url 'soru_sayfasi' %}" class="btn btn-outline-primary">Git</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
