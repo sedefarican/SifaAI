@@ -95,7 +95,7 @@ Sanal Sağlık Asistanı, tahlil sonuçlarını sade bir dille yorumlayan, karma
   * Sedef Arıcan, sprint-2 sırasında Hüseyin'in taskında çıkan API Key sorunu üzerine yoğunlaştı ve Hüseyin'in tasklarına destek verdi.
   * Melis İridağ kişisel öneri promptlarını geliştirdi (S2-2) ve sözlük desteği/terim açıklamaları için alt sistem tasarladı (S2-3).
   * Hüseyin Urak ŞifaAI'ın arayüz iskeletini oluşturdu (S2-5), giriş ve çıkış ekranlarının akışını kodladı (S2-6).
-  * Tuba Gökarslan
+  * Tuba Gökarslan,tahlil yorumlama (S2-1) ve randevu/ilaç hatırlatma (S2-4) promptlarını geliştirdi ve yapay zeka modülü ile yanıtları konsol üzerinden test etti.
 
 #### SPRINT REVIEW KATILIMCILARI
   * Sedef Arıcan, Melis İridağ, Hüseyin Urak, Tuba Gökarslan
