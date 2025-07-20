@@ -1,7 +1,10 @@
 import google.generativeai as genai
 import fitz 
+from dotenv import load_dotenv
+import os
 
-GENAI_API_KEY = "AIzaSyD1okXsZsUZ2M6JtJw9kInTZ2FWi4240Ho"
+load_dotenv()
+GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 genai.configure(api_key=GENAI_API_KEY)
 model = genai.GenerativeModel("gemini-pro")
 
