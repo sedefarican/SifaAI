@@ -76,3 +76,30 @@ Sanal Sağlık Asistanı, tahlil sonuçlarını sade bir dille yorumlayan, karma
 #### SPRINT RETROSPECTIVE
   *  İkinci sprint için görev dağılımından önce bir gün görevleri inceleme süresi verilmesine,
   *  Gün içinde daily dışında bir sefer daha çalışma durumlarının kontrol edilmesine karar verilmiştir.
+
+
+## Sprint 2
+
+### Burndown Chart
+
+
+
+### Sprint 2 Notları
+
+*  Sprintin ilk haftası taskların dağılımına karar verildi.
+*  İlk hafta sonunda sistem arayüzü için örnek tasarım template'i seçildi.
+*  Daily scrum toplantıları WhatsApp üzerinden yapılan konuşmalar ile yapıldı.
+*  Sprintin ikinci haftası bireysel olarak taskların ilerletilmesi, karşılaşılan sorunların ekiple paylaşılması -ve çözüm bulunması, sprint-2 tasklarını yetiştirebilmek adına daha yoğun çalışılması ile geçti.
+
+#### SPRINT REVIEW
+  * Sedef Arıcan, sprint-2 sırasında Hüseyin'in taskında çıkan API Key sorunu üzerine yoğunlaştı ve Hüseyin'in tasklarına destek verdi.
+  * Melis İridağ kişisel öneri promptlarını geliştirdi (S2-2) ve sözlük desteği/terim açıklamaları için alt sistem tasarladı (S2-3).
+  * Hüseyin Urak ŞifaAI'ın arayüz iskeletini oluşturdu (S2-5), giriş ve çıkış ekranlarının akışını kodladı (S2-6).
+  * Tuba Gökarslan
+
+#### SPRINT REVIEW KATILIMCILARI
+  * Sedef Arıcan, Melis İridağ, Hüseyin Urak, Tuba Gökarslan
+ 
+#### SPRINT RETROSPECTIVE
+  *  Üçüncü sprint için görev dağılımından önce bir gün görevleri inceleme süresi verilmesine,
+  *  Gün içinde daily dışında bir sefer daha çalışma durumlarının kontrol edilmesine karar verilmiştir.
