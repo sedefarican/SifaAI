@@ -89,3 +89,9 @@ class PDFUploadForm(forms.ModelForm):
                 'class': 'form-control bg-dark text-white border-secondary'
             })
         }
+    def __init__(self, *args, **kwargs):
+        super(PDFUploadForm, self).__init__(*args, **kwargs)
+        self.fields['file'].required = False  # zorunlu değil
+        
+class TahlilForm(forms.Form):
+    file = forms.FileField(label="PDF Dosyası")
