@@ -6,7 +6,7 @@ import os
 load_dotenv()
 GENAI_API_KEY = os.getenv("GENAI_API_KEY")
 genai.configure(api_key=GENAI_API_KEY)
-model = genai.GenerativeModel("gemini-pro")
+model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
 def extract_text_from_pdf(file_obj):
     doc = fitz.open(stream=file_obj, filetype="pdf")
@@ -26,7 +26,8 @@ def extract_text_from_pdf(file_obj):
 #     return response.text
 
 def generate_explanation(text):
-    model = genai.GenerativeModel("gemini-1.5-flash-latest")
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    #model = genai.GenerativeModel("gemini-1.5-flash-latest")
     response = model.generate_content(f"Aşağıdaki tıbbi tahlil metnini hastanın anlayabileceği sade bir dille açıkla:\n\n{text}")
     return response.text
 
@@ -38,13 +39,15 @@ def extract_text_from_pdf(file):
     return text
 
 def generate_simplified_explanation(text):
-    model = genai.GenerativeModel("gemini-1.5-flash-latest")
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    #model = genai.GenerativeModel("gemini-1.5-flash-latest")
     prompt = f"Aşağıdaki tıbbi tahlil metnini hastanın anlayabileceği sade bir dille açıkla:\n\n{text}"
     response = model.generate_content(prompt)
     return response.text.strip()
 
 def generate_health_suggestions(text):
-    model = genai.GenerativeModel("gemini-1.5-flash-latest")
+    model = genai.GenerativeModel("gemini-2.5-flash-lite")
+    #model = genai.GenerativeModel("gemini-1.5-flash-latest")
     prompt = f"""
     Aşağıdaki açıklamaya göre hastaya yönelik 4 kısa sağlık önerisi oluştur. 
     Bunlar: beslenme, egzersiz, stres/uyku ve takviye şeklinde dört başlıkta olsun.
@@ -62,3 +65,13 @@ def generate_health_suggestions(text):
     for i in range(min(4, len(lines))):
         suggestions.append((titles[i], lines[i], colors[i]))
     return suggestions
+
+def ask_gemini(question_text: str) -> str:
+    try:
+        response = model.generate_content(
+            f"Hasta şu soruyu sordu: {question_text}. "
+            f"Cevabı sade ve anlaşılır bir dille açıkla."
+        )
+        return response.text
+    except Exception as e:
+        return f"Hata: {str(e)}"

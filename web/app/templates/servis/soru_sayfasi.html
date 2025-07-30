@@ -1,29 +1,87 @@
 {% extends 'base.html' %}
-
-{% block title %}Sağlık Sorusu Sor{% endblock %}
+{% block title %}Sorular{% endblock %}
 
 {% block content %}
+<h2 class="mb-4 text-center" style="color:#0ABAB5;">💬 Sağlık Soruları</h2>
+<div class="d-flex" style="height:80vh; gap:20px;">
 
-<h2 class="mb-4 text-center" style="color: #0ABAB5;">❓ Sağlıkla İlgili Bir Soru Sor</h2>
-<p class="mb-4 text-center text-muted">Merak ettiğin herhangi bir sağlık konusunu bizimle paylaş.</p>
+    <!-- sol menü (geçmiş sorular kısmı) -->
+    <div style="flex:0 0 25%; background-color:#D7F2EC; border-radius:10px; padding:15px; overflow-y:auto;">
+        <h5 style="color:#0ABAB5;">Soru Geçmişiniz</h5>
+        <ul class="list-unstyled question-list">
+            {% for q in questions %}
+                <li class="mb-2">
+                    <a href="?q={{ q.question_id }}" class="text-decoration-none" style="color:#1B2A41;">
+                        {{ q.question_text|truncatewords:4 }}
+                    </a>
+                </li>
+            {% empty %}
+                <li class="text-muted">Henüz soru sormadınız! </li>
+            {% endfor %}
+        </ul>
+        <hr>
+        <a href="{% url 'soru_sayfasi' %}" class="btn btn-sm btn-outline-primary w-100">+ Yeni Soru </a>
+    </div>
 
-<form method="POST" class="p-4 rounded" style="background-color: #F2FFFC;">
-  {% csrf_token %}
-  
-  <div class="mb-3">
-    <label for="soru" class="form-label text-dark">Sorunuz</label>
-    <textarea name="soru" id="soru" rows="6"
-      class="form-control border-0 shadow-sm"
-      style="background-color: #E6F7F4;"
-      placeholder="Örneğin: Son zamanlarda sürekli baş ağrısı yaşıyorum, neden olabilir?" required>
-    </textarea>
-  </div>
+    <!-- sohbet kısmı -->
+    <div class="flex-grow-1" style="background-color:#F2FAF8; border-radius:10px; padding:20px; display:flex; flex-direction:column;">
 
-  <button type="submit" class="btn" style="background-color: #0ABAB5; color: white;">Soruyu Gönder</button>
-</form>
+        {% if active_question %}
+        <div id="chat-box" style="flex-grow:1; overflow-y:auto; padding-right:10px;">
+            {% for msg in messages %}
+                <!-- kullanıcı sorusu (sağ) -->
+                <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                    <div style="background-color:#D7F2EC; padding:10px 15px; border-radius:10px; max-width:50%; text-align:right;">
+                        {{ msg.question_text }}
+                    </div>
+                </div>
 
-{% if success %}
-  <div class="alert alert-success mt-4 shadow-sm">✅ Sorunuz alındı, en kısa sürede cevaplanacaktır!</div>
-{% endif %}
+                <!-- ai cevabı (sol) -->
+                {% if msg.answer_paragraphs %}
+                <div style="display:flex; justify-content:flex-start; margin-bottom:20px;">
+                    <div style="background-color:#F0F0F0; padding:12px 16px; border-radius:10px; max-width:70%; line-height:1.6; text-align:left;">
+                        {% for p in msg.answer_paragraphs %}
+                            <p style="margin-bottom:8px;">{{ p }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
+        <form method="post" style="display:flex; gap:10px; margin-top:10px;">
+            {% csrf_token %}
+            <input type="hidden" name="parent_id" value="{{ active_question.question_id }}">
+            <textarea name="soru" class="form-control" rows="2" placeholder="Yeni soru yazın..."></textarea>
+            <button type="submit" class="btn btn-outline-primary">Gönder</button>
+        </form>
+        {% else %}
+            <form method="post" class="w-100">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <textarea name="soru" class="form-control" rows="4" placeholder="Sorunuzu buraya yazın..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Gönder</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    if(chatBox){ chatBox.scrollTop = chatBox.scrollHeight; }
+</script>
+<style>
+.question-list li:hover {
+    background-color: #F2FAF8;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.question-list li a {
+    display: block; /* Tüm satırı tıklanabilir yapar */
+    padding: 4px 6px;
+    color: #1B2A41;
+    text-decoration: none;
+}
+</style>
 {% endblock %}

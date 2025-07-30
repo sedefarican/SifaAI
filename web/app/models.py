@@ -16,7 +16,6 @@ class Patient (models.Model):
      surgical_history = models.TextField(blank=True, null=True)
      age = models.IntegerField()
 
-
      def __str__(self):
           return self.name
     
@@ -65,13 +64,17 @@ class Reminder(models.Model):
 
      def __str__(self):
           return f"{self.patient.username} - Hatırlatıcı: {self.title}"
-     
-     
+
+
 class HealthQuestion(models.Model):
-    question_id = models.AutoField(primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     question_text = models.TextField()
+    answer_text = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    question_id = models.AutoField(primary_key=True)
 
-    def __str__(self):
-        return f"{self.patient.username} - {self.created_at.strftime('%d.%m.%Y %H:%M')}"
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='child_questions', on_delete=models.CASCADE)
+
+    @property
+    def short_title(self):
+        return self.question_text[:20] + ("..." if len(self.question_text) > 20 else "")

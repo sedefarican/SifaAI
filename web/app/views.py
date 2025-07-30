@@ -1,8 +1,10 @@
+import re
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Patient, AnswerReport, HealthQuestion
 from .forms import PatientRegisterForm, PatientLoginForm, ServiceTypeForm, PDFUploadForm
-from .utils import extract_text_from_pdf, generate_explanation, generate_simplified_explanation, generate_health_suggestions
+from .utils import extract_text_from_pdf, generate_explanation, generate_simplified_explanation, generate_health_suggestions, ask_gemini
 from io import BytesIO
 
 def register_view(request):
@@ -205,20 +207,65 @@ def oneriler_view(request):
 def hatirlatici_view(request):
     return render(request, 'servis/hatirlatici_sayfasi.html')
 
+
 def soru_view(request):
     patient_id = request.session.get('patient_id')
     if not patient_id:
         return redirect('login')
-    
+
     patient = Patient.objects.get(pk=patient_id)
+
+    questions = HealthQuestion.objects.filter(
+        patient=patient, parent__isnull=True
+    ).order_by('-created_at')
+
+    active_question = None
+    messages = []
+
+    selected_id = request.GET.get('q')
+    if selected_id:
+        try:
+            active_question = questions.get(question_id=selected_id)
+            messages = [active_question] + list(
+                active_question.child_questions.all().order_by('created_at')
+            )
+        except HealthQuestion.DoesNotExist:
+            pass
 
     if request.method == 'POST':
         soru = request.POST.get('soru')
-        if soru:
-            HealthQuestion.objects.create(patient=patient, question_text=soru)
-            return render(request, 'servis/soru_sayfasi.html', {'success': True})
+        parent_id = request.POST.get('parent_id')
 
-    return render(request, 'servis/soru_sayfasi.html')
+        if soru:
+            from .utils import ask_gemini
+            cevap = ask_gemini(soru)
+
+            if parent_id:
+                parent = HealthQuestion.objects.get(pk=parent_id)
+            else:
+                parent = None
+
+            new_q = HealthQuestion.objects.create(
+                patient=patient,
+                parent=parent,
+                question_text=soru,
+                answer_text=cevap
+            )
+
+            # Eğer parent varsa aynı sohbeti tekrar yükle
+            if parent:
+                return redirect(f"{reverse('soru_sayfasi')}?q={parent.question_id}")
+            else:
+                return redirect(f"{reverse('soru_sayfasi')}?q={new_q.question_id}")
+
+    for m in messages:
+        m.answer_paragraphs = paragraph_cleaning(m.answer_text)
+
+    return render(request, 'servis/soru_sayfasi.html', {
+        'questions': questions,
+        'active_question': active_question,
+        'messages': messages,
+    })
 
 def profile_view(request):
     patient_id = request.session.get('patient_id')
@@ -233,3 +280,10 @@ def profile_view(request):
         'patient': patient, 
         'reports': reports
     })
+def paragraph_cleaning(text):
+    # ai cevabındaki  **, *, - gibi markdown işaretlerini kaldır
+    text = re.sub(r'\*{1,2}', '', text)
+    text = re.sub(r'^\s*[-•*]+\s*', '', text, flags=re.MULTILINE)
+
+    paragraphs = [p.strip() for p in re.split(r'\n\s*\n', text) if p.strip()]
+    return paragraphs
