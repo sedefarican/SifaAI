@@ -4,8 +4,10 @@ from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Patient, AnswerReport, HealthQuestion
 from .forms import PatientRegisterForm, PatientLoginForm, ServiceTypeForm, PDFUploadForm
-from .utils import extract_text_from_pdf, generate_explanation, generate_simplified_explanation, generate_health_suggestions, ask_gemini
+from .utils import extract_text_from_pdf, generate_explanation, generate_simplified_explanation, generate_health_suggestions, create_reminder_event
 from io import BytesIO
+from datetime import datetime
+
 
 def register_view(request):
     if request.method == 'POST':
@@ -166,46 +168,37 @@ def oneriler_view(request):
         'reports': reports,
         'suggestions': suggestions
     })
-    patient_id = request.session.get('patient_id')
-    if not patient_id:
-        return redirect('login')
-
-    patient = Patient.objects.get(pk=patient_id)
-    reports = AnswerReport.objects.filter(patient=patient).order_by('-date')
-
-    suggestions = []
-    explanation_text = ""
-
-    if request.method == 'POST':
-        pdf_form = PDFUploadForm(request.POST, request.FILES)
-        selected_report_id = request.POST.get('report_id')
-
-        if pdf_form.is_valid() and 'file' in request.FILES:
-            # Yeni PDF dosyası yüklendi
-            file = request.FILES['file']
-            text = extract_text_from_pdf(file)
-            explanation_text = generate_simplified_explanation(text)
-
-        elif selected_report_id:
-            try:
-                selected_report = AnswerReport.objects.get(id=selected_report_id, patient=patient)
-                explanation_text = selected_report.simple_comment
-            except AnswerReport.DoesNotExist:
-                explanation_text = ""
-
-        if explanation_text:
-            suggestions = generate_health_suggestions(explanation_text)
-    else:
-        pdf_form = PDFUploadForm()
-
-    return render(request, 'servis/oneriler_sayfasi.html', {
-        'pdf_form': pdf_form,
-        'reports': reports,
-        'suggestions': suggestions
-    })
 
 def hatirlatici_view(request):
-    return render(request, 'servis/hatirlatici_sayfasi.html')
+    success = False
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        frequency = request.POST.get('frequency')
+        time_str = request.POST.get('time')  # '14:30'
+
+        today = datetime.now().date()
+        hour, minute = map(int, time_str.split(':'))
+        start_time = datetime.combine(today, datetime.min.time()).replace(hour=hour, minute=minute)
+
+        # 🔁 Tekrar kuralı belirleme
+        freq_map = {
+            'daily': 'RRULE:FREQ=DAILY',
+            'monday': 'RRULE:FREQ=WEEKLY;BYDAY=MO',
+            'tuesday': 'RRULE:FREQ=WEEKLY;BYDAY=TU',
+            'wednesday': 'RRULE:FREQ=WEEKLY;BYDAY=WE',
+            'thursday': 'RRULE:FREQ=WEEKLY;BYDAY=TH',
+            'friday': 'RRULE:FREQ=WEEKLY;BYDAY=FR',
+            'saturday': 'RRULE:FREQ=WEEKLY;BYDAY=SA',
+            'sunday': 'RRULE:FREQ=WEEKLY;BYDAY=SU',
+        }
+
+        recurrence_rule = freq_map.get(frequency, 'RRULE:FREQ=DAILY')
+        create_reminder_event(title, description, start_time, recurrence_rule)
+        success = True
+
+    return render(request, 'servis/hatirlatici_sayfasi.html', {'success': success})
 
 
 def soru_view(request):
