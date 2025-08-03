@@ -103,3 +103,35 @@ Sanal Sağlık Asistanı, tahlil sonuçlarını sade bir dille yorumlayan, karma
 #### SPRINT RETROSPECTIVE
   *  Üçüncü sprint için görev dağılımından önce bir gün görevleri inceleme süresi verilmesine,
   *  Gün içinde daily dışında bir sefer daha çalışma durumlarının kontrol edilmesine karar verilmiştir.
+
+
+
+## Sprint 3
+
+### Burndown Chart
+
+
+
+### Sprint 3 Notları
+
+*  Sprintin ilk haftasında görev dağılımı netleştirildi ve her ekip üyesi kendi uzmanlık alanına uygun görevleri üstlendi.
+*  Arayüz için örnek tasarım şablonu seçildi ve entegrasyon süreci öncesinde temel iskelet belirlendi.
+*  Günlük ilerleme takibi, ekip içi WhatsApp iletişimi üzerinden düzenli olarak sağlandı.
+*  İkinci hafta boyunca, her ekip üyesi bireysel görevlerini sürdürürken karşılaştığı sorunları ekip ile paylaşarak çözüme ulaştı.
+*  Sprint-3 kapsamındaki entegrasyon, test ve içerik üretimi süreçleri yoğun bir tempoyla yürütüldü.
+
+#### SPRINT REVIEW
+  * Sedef Arıcan, Sprint-3 sürecinde Hüseyin’in yürüttüğü kullanıcı testi görevine destek sağladı. 3–5 kullanıcı ile testler yaparak geri bildirimleri derledi. Ayrıca Sprint-2’de yaşanan API Key sorununa odaklanarak Hüseyin’in teknik sürecine katkı sundu.
+  * Hüseyin Urak, Sprint-3’te, yapay zeka modüllerinin entegrasyonunu gerçekleştirerek tüm bileşenlerin tek bir sistemde çalışmasını sağladı. Kullanıcı test sürecinde teknik destek verdi.
+  * Tuba Gökarslan, yapay zekâ yanıtlarını konsol üzerinde test etti. Ardından prompt ve çıktı kalitesini iyileştirerek daha gerçekçi, hedef odaklı öneriler elde edilmesini sağladı.
+  * Melis İridağ, Sprint-3’te sunum slaytlarını ve proje posterini tasarlayarak projenin iletişim ve sunum materyallerini hazırladı.
+
+#### SPRINT REVIEW KATILIMCILARI
+  * Sedef Arıcan, Melis İridağ, Hüseyin Urak, Tuba Gökarslan
+ 
+#### SPRINT RETROSPECTIVE
+  * Üçüncü sprintte modül entegrasyonu ve test süreçleri yoğun olduğu için, sprint başında entegrasyon gereksinimlerinin ekipçe detaylı gözden geçirilmesine karar verilmiştir.
+  * Kullanıcı testleri sırasında alınan geri bildirimlerin daha erken aşamada ele alınmasının önemli olduğu görülmüş ve sonraki projelerde test geri bildirimleri için sprint ortasında ayrı bir oturum planlanması önerilmiştir.
+  * Prompt iyileştirmeleri ve çıktı kontrolü için test örneklerinin sprint başında belirlenmesinin kaliteyi artırdığı değerlendirilmiştir.
+
+
